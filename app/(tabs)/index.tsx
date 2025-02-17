@@ -2,7 +2,7 @@ import SingleTask from '@/components/SingleTask';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 
 function TaskInput() {
   const [task, setTask] = useState('');  // State to hold the inputted task
@@ -48,8 +48,24 @@ function TaskInput() {
     setTask(''); // Clears the TextInput
   };
 
-  const deleteAll = () => {
+  const deleteOne = (element:string):void => {
+    setTasks((task) => task.filter((elm) => element !== elm))
+  }
 
+  const deleteAll = () => {
+    Alert.alert(
+      'Are you sure?', // Title
+      'If you press ok, all tasks will be deleted.', // Message
+      [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => setTasks([]) },
+      ],
+      { cancelable: false } // Prevents tapping outside to dismiss
+    );
   }
 
   return (
@@ -86,7 +102,7 @@ function TaskInput() {
       <ScrollView style={styles.taskList}>
         {tasks.length > 0 ? (
           tasks.map((task, index) => (
-            <SingleTask key={index} task={task} style={styles.taskText} />
+            <SingleTask key={index} task={task} style={styles.taskText} onPressDelete={() => deleteOne(task)} />
           ))
         ) : (
           <Text style={styles.taskText}>No tasks yet!</Text>
@@ -126,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     fontSize: 16,
-    color:'white'
+    color:'white',
   },
   buttonContainer: {
     flexDirection: 'row',

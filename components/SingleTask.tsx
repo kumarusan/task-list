@@ -1,6 +1,6 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { GestureResponderEvent, Text, TouchableOpacity, View } from "react-native";
 
-export default function SingleTask({task,checked, style}:{task:string;checked?:boolean;style?:object}) {
+export default function SingleTask({task,checked,style,onPressDelete}:{task:string;checked?:boolean;style?:object;onPressDelete:any}) {
     return (
         <TouchableOpacity style={{
             borderWidth:1,
@@ -10,7 +10,9 @@ export default function SingleTask({task,checked, style}:{task:string;checked?:b
             borderRadius:5,
             alignSelf:"center",
             marginBottom:15
-        }}>
+        }}
+        onPress={onPressDelete}
+        >
             <Text style={[style]}>
                 {task}
             </Text>
