@@ -69,7 +69,11 @@ function TaskInput() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{
+      flex: 1,
+    }}>
+
+    <View style={styles.container}>
       {/* Header and Input Section */}
       <View style={styles.inputSection}>
         <Text style={styles.header}>Daily Tasks</Text>
@@ -108,7 +112,8 @@ function TaskInput() {
           <Text style={styles.taskText}>No tasks yet!</Text>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
+</SafeAreaView>
   );
 }
 
@@ -116,7 +121,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    // paddingHorizontal:30,
     backgroundColor:'#1A1A1A'
+    // backgroundColor:'red'
+
   },
   inputSection: {
     marginBottom: 20,  // Add some space between the input section and the task list
